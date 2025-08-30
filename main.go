@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -35,6 +36,19 @@ func main() {
 	fmt.Println(reverse("ABCD"))
 	fmt.Println(reverse("tamaT"))
 	fmt.Println(reverse("XYnb"))
+
+	fmt.Println("")
+	fmt.Println(checkBraces("(())"))
+	fmt.Println(checkBraces("()()"))
+	fmt.Println(checkBraces("((()"))
+	fmt.Println(checkBraces("(()))((())"))
+
+	fmt.Println("")
+	fmt.Println(upperCaseExcept([]string{"code", "java", "cool"}, "java"))
+	fmt.Println(upperCaseExcept([]string{"black", "pink", "venom"}, "venom"))
+
+	fmt.Println("")
+	fmt.Println(findMinMax([]int{2, 3, 4, 5, 6, 7, 8, 9, 1, 10}))
 }
 
 func findDivisors(n int) []int {
@@ -102,6 +116,55 @@ func reverse(s string) string {
 		rns[i], rns[j] = rns[j], rns[i] // tukar posisi karakter
 	}
 	return string(rns)
+}
+
+func checkBraces(s string) bool {
+	braces := 0
+	for _, ch := range s {
+		if ch == '(' {
+			braces++
+		} else if ch == ')' {
+			braces--
+			if braces < 0 {
+				return false
+			}
+		}
+	}
+	return braces == 0
+}
+
+// challenges day 2
+
+func upperCaseExcept(words []string, except string) []string {
+	result := []string{}
+	for _, word := range words {
+		if word == except {
+			result = append(result, word)
+		} else {
+			result = append(result, strings.ToUpper(word))
+		}
+	}
+	return result
+}
+
+func findMinMax(nums []int) [2]int {
+	if len(nums) == 0 {
+		return [2]int{0, 0} // default kalau kosong
+	}
+
+	min := nums[0]
+	max := nums[0]
+
+	for _, n := range nums {
+		if n < min {
+			min = n
+		}
+		if n > max {
+			max = n
+		}
+	}
+
+	return [2]int{min, max}
 }
 
 // func printNumberPyramid(n int) {
